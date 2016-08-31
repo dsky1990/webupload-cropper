@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>uploadCrop</title>
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" href="cropper.min.css">
+  <style>
+    .imgCropBox .imgCropBtn {
+      cursor: pointer;
+      border: 1px solid #dddddd;
+    }
+
+    .webuploader-container input {
+      opacity: 0;
+      filter: Alpha(opacity=0);
+      font-size: 0;
+      cursor: pointer;
+    }
+    .mar_b--10{
+      margin-bottom: 10px;
+    }
+    .img-box-text{
+      display: none
+    }
+    .img-add, .img-rotate, .img-crop-reset{
+      cursor: pointer;
+    }
+    .img-crop-reset{
+      margin-left: 20px;
+    }
+
+    .img-add{
+      position: relative;
+      display: inline-block;
+    }
+    .webuploader-pick + div input{
+      width: 100%;
+      height: 100%;
+    }
+    .img-box-set{
+      display: none;
+      padding: 10px 0;
+    }
+    .img-box-set img{
+      margin-right: 5px;
+    }
+    .imgCropModal .modal-footer{
+      text-align: center;
+    }
+    .imgCropModal .modal-footer .btn{
+      padding:6px 26px;
+    }
+    .imgCloud-modal ,.modal-footer-ImgCloud{
+      display: none;
+    }
+    .imgCloud-modal .imgCloud_box .imgCloud_list {
+      border: 1px solid #f2f2f2;
+      padding: 10px;
+      padding-bottom: 0;
+      margin-right: 15px;
+      display: inline-block;
+      margin-bottom:20px;
+      position: relative;
+      cursor: pointer;
+    }
+    .imgCloud-modal .imgCloud_box .imgCloud_list:nth-child(4n){
+      margin-right: 0;
+    }
+    .imgCloud_box  .imgCloud_name{
+      padding: 5px 10px;
+      background: #f2f2f2;
+    }
+    .mar_l--15{
+      margin-left: 15px;;
+    }
+    .imgCloud-select{
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      background-image: url("selected.png");
+      width: 28px;
+      height: 28px;
+      display: none;
+    }
+    .imgCloud-select.active{
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<div class="imgCropBox" id="imgCropBox">
+  <img src="./btn-upload.jpg" alt="" class="imgCropBtn" id="imgCropBtn">
+  <input type="text" class="hide imgCropInput"/>
+</div>
+<!--imgCropModal-->
+<div class="modal fade imgCropModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+          aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">图片裁剪</h4>
+      </div>
+      <!--modal-body-->
+      <div class="modal-body" id="uploader">
+        <!--img-modal-->
+        <div class="row img-modal">
+          <div class="col-md-12 mar_b--10">
+            <button class="btn btn-primary img-select img-crop-select">图片裁剪</button>
+            <button class="btn btn-default img-select img-cloud-select">图片库</button>
+          </div>
+          <!--img-box-->
+          <div class="img-box">
+            <div class="col-md-8">
+              <div class="img-box-file" id="imgUploadBtn">
+                <img src="img-upload.png" alt="">
+              </div>
+              <p class="img-box-text">生成预览图中，请稍候</p>
+              <div class="img-box-container">
+
+              </div>
+              <div class="img-box-set">
+                <div class="img-add pull-left" id="img-add">
+                  <p><img src="img-add.png" alt="">重新上传</p>
+                </div>
+                <div class="img-crop-reset pull-left" >
+                  <p><img src="crop-reset.png" alt="">重置裁剪</p>
+                </div>
+                <div class="img-rotate pull-right">
+                  <p><img src="img-rotate.png" alt="">90°旋转</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 ">
+              <h3 class="page-header img-preview-header hide">Preview</h3>
+              <div class="img-preview"></div>
+              <div class="progress progress-striped active" style="display:none;">
+                <div id="progressBar" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+          <!--imgCloud-modal-->
+          <div class="row imgCloud-modal">
+            <div class="imgCloud_box mar_t30">
+              <ul class="col-md-12 mar_l--15">
+                <li class="imgCloud_list">
+                  <img src="picCloud.jpg" alt="" class="img-responsive">
+                  <p class="imgCloud_name ellipsis mar_t10">
+                    图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片.jpg</p>
+                  <i class="imgCloud-select"></i>
+                </li>
+                <li class="imgCloud_list">
+                  <img src="picCloud.jpg" alt="" class="img-responsive">
+                  <p class="imgCloud_name ellipsis mar_t10">
+                    图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片.jpg</p>
+                  <i class="imgCloud-select"></i>
+                </li>
+                <li class="imgCloud_list">
+                  <img src="picCloud.jpg" alt="" class="img-responsive">
+                  <p class="imgCloud_name ellipsis mar_t10">
+                    图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片.jpg</p>
+                  <i class="imgCloud-select"></i>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!--modal-footer-->
+      <div class="modal-footer">
+        <div class="modal-footer-cropImg">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary imgUploadFile" >上传</button>
+          <button type="button" class="btn btn-primary imgUploadRetry" >重试</button>
+        </div>
+        <div class="modal-footer-ImgCloud">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭2</button>
+          <button type="button" class="btn btn-primary imgUploadCloud" >上传2</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="jquery.min.js"></script>
+<script src="bootstrap.min.js"></script>
+<script src="webuploader.min.js"></script>
+<script src="cropper.min.js"></script>
+<script src="imgCropBtn.js"></script>
+<script>
+  var cropOption = {
+    $cropBtn: ".imgCropBtn",
+    $btn: "#imgUploadBtn",
+    $cloudBtn: ".imgUploadCloud",
+    uploadSuccess: function(response){
+
+    },
+    uploadError: function(reason){
+
+    },
+    uploadComplete: function(file){
+
+    },
+    imgCloudFun: function(){
+
+    }
+  };
+  cropUpload(cropOption);
+</script>
+</body>
+</html>
